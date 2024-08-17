@@ -1,0 +1,38 @@
+body {
+  text-align: center;
+  margin: 1rem;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-direction: column;
+}
+
+.player {
+  margin-bottom: 1rem;
+}
+
+.board {
+  border: 0.5rem solid #097969;
+  border-radius: 2px;
+  background-color: #50C878;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  height: 4rem;
+  width: 4rem;
+  border: 2px solid #097969;
+  box-sizing: border-box; 
+}
+
+.cell:hover {
+  background-color: #90EE90;
+  cursor: pointer;
+}
