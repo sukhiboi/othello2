@@ -1,11 +1,11 @@
-const renderBoard = (root, { board, player, completed }, onCellClick) => {
+const renderBoard = (root, { board, player, completed, winner }, onCellClick) => {
   root.innerHTML = ""
 
   if (completed) {
     const completedEl = document.createElement("div");
     completedEl.className = "completed";
-    completedEl.innerText = `${player} wins`
-    root.append(completedEl);
+    completedEl.innerText = winner.length === 1 ? `${winner.name} wins` : "It's a tie",
+      root.append(completedEl);
     return
   }
 
@@ -18,7 +18,8 @@ const renderBoard = (root, { board, player, completed }, onCellClick) => {
 
     row.forEach((cell, cellIdx) => {
       const cellEl = document.createElement("div");
-      cellEl.className = "cell";
+      cellEl.classList.add(...["cell", `player-${cell}`]);
+      cellEl.innerText = cell ?? "";
       rowEl.append(cellEl);
       cellEl.addEventListener("click", () => onCellClick(rowIdx, cellIdx))
     })
@@ -27,7 +28,7 @@ const renderBoard = (root, { board, player, completed }, onCellClick) => {
   })
 
   const playerEl = document.createElement("div");
-  playerEl.innerText = `Current turn: ${player}`;
+  playerEl.innerText = `Current turn: ${player.name}`;
   playerEl.className = "player"
 
   root.append(playerEl)

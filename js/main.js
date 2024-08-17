@@ -1,32 +1,36 @@
 const root = document.getElementById("root");
 
-const PLAYER1 = "player1";
-const PLYAER2 = "player2";
+const player1 = { name: "Player 1", symbol: "x" }
+const player2 = { name: "Player 2", symbol: "o" }
 
 const players = {
-  [PLAYER1]: "Player 1",
-  [PLYAER2]: "Player 2"
+  [player1.name]: { ...player1, next: player2 },
+  [player2.name]: { ...player2, next: player1 }
 }
 
 let state = {
   completed: false,
   board: createBoard(),
-  player: "player1"
+  player: players[player1.name],
+  winner: undefined
 }
 
 const playTurn = (state, coin) => {
-  const completed = false;
-  const nextPlayer = state.player === PLAYER1 ? PLYAER2 : PLAYER1
+  if (isInvalidTurn(state, coin)) return state;
+
+  const board = placeCoin(state, coin);
+
   return {
-    completed,
-    board: state.board,
-    player: completed ? state.player : nextPlayer
+    completed: areAllCoinsUsed(board),
+    board,
+    player: players[state.player.name].next,
+    winner: findWinner({ state, board }, players)
   }
 }
 
 const onCellClick = (rowIdx, cellIdx) => {
   state = playTurn(state, { rowIdx, cellIdx });
-  renderBoard(root, { ...state, player: players[state.player] }, onCellClick)
+  renderBoard(root, state, onCellClick)
 };
 
-renderBoard(root, { ...state, player: players[state.player] }, onCellClick)
+renderBoard(root, state, onCellClick)
