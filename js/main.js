@@ -1,7 +1,7 @@
 const root = document.getElementById("root");
 
-const player1 = { name: "Player 1", symbol: "x" }
-const player2 = { name: "Player 2", symbol: "o" }
+const player1 = { name: "Player 1 (Black)", symbol: "b" }
+const player2 = { name: "Player 2 (White)", symbol: "w" }
 
 const players = {
   [player1.name]: { ...player1, next: player2 },
@@ -10,7 +10,7 @@ const players = {
 
 let state = {
   completed: false,
-  board: createBoard(),
+  board: createBoard({ players: { player1, player2 } }),
   player: players[player1.name],
   winner: undefined
 }
@@ -29,7 +29,7 @@ const playTurn = (state, coin) => {
 }
 
 const onCellClick = (rowIdx, cellIdx) => {
-  state = playTurn(state, { rowIdx, cellIdx });
+  state = playTurn(state, [rowIdx, cellIdx]);
   renderBoard(root, state, onCellClick)
 };
 

@@ -4,7 +4,7 @@ const renderBoard = (root, { board, player, completed, winner }, onCellClick) =>
   if (completed) {
     const completedEl = document.createElement("div");
     completedEl.className = "completed";
-    completedEl.innerText = winner.length === 1 ? `${winner.name} wins` : "It's a tie",
+    completedEl.innerText = winner.length === 1 ? `${winner[0].name} wins` : "It's a tie",
       root.append(completedEl);
     return
   }
@@ -18,10 +18,15 @@ const renderBoard = (root, { board, player, completed, winner }, onCellClick) =>
 
     row.forEach((cell, cellIdx) => {
       const cellEl = document.createElement("div");
-      cellEl.classList.add(...["cell", `player-${cell}`]);
-      cellEl.innerText = cell ?? "";
+      cellEl.classList.add(...["cell"]);
       rowEl.append(cellEl);
       cellEl.addEventListener("click", () => onCellClick(rowIdx, cellIdx))
+
+      if (cell) {
+        const coin = document.createElement("div");
+        coin.classList.add(...["coin", `coin-${cell}`])
+        cellEl.appendChild(coin)
+      }
     })
 
     boardEl.append(rowEl)
