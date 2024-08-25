@@ -10,21 +10,21 @@ const players = {
 
 let state = {
   completed: false,
-  board: createBoard({ players: { player1, player2 } }),
-  player: players[player1.name],
+  board: Othello.createBoard(8, [player1, player2]),
+  player: player1,
   winner: undefined
 }
 
 const playTurn = (state, coin) => {
-  if (isInvalidTurn(state, coin)) return state;
+  if (Othello.isInvalidTurn(state.board, coin)) return state;
 
-  const board = placeCoin(state, coin);
+  const board = Othello.placeCoin(state, coin);
 
   return {
-    completed: areAllCoinsUsed(board),
+    completed: Othello.areAllPositionsFilled(board),
     board,
     player: players[state.player.name].next,
-    winner: findWinner({ state, board }, players)
+    winner: Othello.findWinner(board, [player1, player2])
   }
 }
 

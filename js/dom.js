@@ -12,7 +12,7 @@ const renderBoard = (root, { board, player, completed, winner }, onCellClick) =>
   const boardEl = document.createElement("div");
   boardEl.className = "board";
 
-  board.forEach((row, rowIdx) => {
+  board.places.forEach((row, rowIdx) => {
     const rowEl = document.createElement("div");
     rowEl.className = "row"
 
